@@ -259,15 +259,21 @@ Urgency automatically increases when the SLA is breached.
 
 ---
 
-✅ US-010 — Route Booking to Queue
-The Booking Execution stage uses conditional routing based on *Show Type*.
+## ✅ US-010 — Route Booking to Queue
+
+The Booking Execution stage uses conditional routing based on **Show Type**.
+
 | Show Type   | Work Queue          |
 | ----------- | ------------------- |
 | 🎬 Standard | `StandardShowQueue` |
 | ⭐ Premium   | `PremiumShowQueue`  |
 
-🗃️ Data Objects
-🎬 Movie
+---
+
+# 🗃️ Data Objects
+
+## 🎬 Movie
+
 | Property      | Type                  |
 | ------------- | --------------------- |
 | Movie Title   | Text                  |
@@ -281,7 +287,10 @@ The Booking Execution stage uses conditional routing based on *Show Type*.
 | Show List     | Data Reference → Show |
 | Is Active     | Boolean               |
 
-🎭 Show
+---
+
+## 🎭 Show
+
 | Property             | Type                   |
 | -------------------- | ---------------------- |
 | Show Label           | Text                   |
@@ -293,11 +302,18 @@ The Booking Execution stage uses conditional routing based on *Show Type*.
 | Ticket Price         | Currency               |
 | Movie                | Data Reference → Movie |
 | Booking SLA Deadline | Date & Time            |
-Show Type Values
+
+### Show Type Values
+
+```text
 Standard
 Premium
 IMAX
-🔧 Pega Rules Configured
+```
+
+---
+
+# 🔧 Pega Rules Configured
 
 | Rule                   | Rule Type          | Purpose                               |
 | ---------------------- | ------------------ | ------------------------------------- |
@@ -310,7 +326,10 @@ IMAX
 | `UpdateBookingSystem`  | Data Transform     | Updates booking information           |
 | `SendConfirmation_0`   | Correspondence     | Sends confirmation email              |
 | `BookingRequest_Flow`  | Flow               | Controls booking workflow             |
-👥 Personas & Work Queues
+
+---
+
+# 👥 Personas & Work Queues
 
 | Work Queue          | Stage             | Routing Condition         |
 | ------------------- | ----------------- | ------------------------- |
@@ -318,18 +337,22 @@ IMAX
 | `StandardShowQueue` | Booking Execution | Show Type = Standard      |
 | `PremiumShowQueue`  | Booking Execution | Show Type = Premium       |
 
-🛠️ Technology Stack
+---
+
+# 🛠️ Technology Stack
 
 | Technology            | Details                                |
 | --------------------- | -------------------------------------- |
 | **Platform**          | Pega Platform                          |
-| *Development Tools*   | App Studio + Dev Studio                |
-| *Application*         | `NIP-MovieTicket-AdduriAswani`         |
-| *Version*             | `01.01.01`                             |
-| *Branch*              | `BP-1`                                 |
-| *Case Class*          | `MoV-MovieTic-Work-MovieTicketRequest` |
+| **Development Tools** | App Studio + Dev Studio                |
+| **Application**       | `NIP-MovieTicket-AdduriAswani`         |
+| **Version**           | `01.01.01`                             |
+| **Branch**            | `BP-1`                                 |
+| **Case Class**        | `MoV-MovieTic-Work-MovieTicketRequest` |
 
-Pega Capabilities Used
+### Pega Capabilities Used
+
+```text
 Case Types
 Data Objects
 Data References
@@ -341,7 +364,13 @@ SLA
 Correspondence
 Email Notifications
 Case Lifecycle
-📂 Project Structure
+```
+
+---
+
+# 📂 Project Structure
+
+```text
 NIP-MovieTicket-AdduriAswani
 │
 ├── Case Types
@@ -365,35 +394,86 @@ NIP-MovieTicket-AdduriAswani
 └── SLA
     ├── Goal: 1 Day
     └── Deadline: 2 Days
-🧩 Challenges & Solutions
-Challenge: Booking Cost Showing `$0.00`
+```
+
+---
+
+# 🧩 Challenges & Solutions
+
+## Challenge: Booking Cost Showing `$0.00`
+
 During development, the Booking Cost initially displayed:
+
+```text
 $0.00
-🔍 Root Cause
+```
+
+### 🔍 Root Cause
+
 The issue was caused by a chain of three configuration problems.
-1. Declare Expression
+
+### 1. Declare Expression
+
 The Declare Expression was initially hardcoded:
+
+```text
 .BookingCost = 0
-✅ Fix
+```
+
+### ✅ Fix
+
 It was changed to:
+
+```text
 .BookingCost = .TicketPrice * .NumberOfTickets
-2. Incorrect Data Transform Target
+```
+
+---
+
+### 2. Incorrect Data Transform Target
+
 The `CalculateBookingCost` Data Transform was updating:
+
+```text
 .TotalCost
+```
+
 instead of:
+
+```text
 .BookingCost
-✅ Fix
+```
+
+### ✅ Fix
+
 The target field was corrected to:
+
+```text
 .BookingCost
-3. Missing Lookup Mapping
+```
+
+---
+
+### 3. Missing Lookup Mapping
 
 The `LookupShowDetails` Data Transform did not contain the required mappings.
- ✅ Fix
+
+### ✅ Fix
+
 Mappings were added for:
+
+```text
 TicketPrice
 ShowType
+```
+
 This ensured that the correct Show information was available before calculating the booking cost.
-🔄 End-to-End Booking Flow
+
+---
+
+# 🔄 End-to-End Booking Flow
+
+```text
 Customer
    │
    ▼
@@ -438,8 +518,14 @@ Customer
                             │
                             ▼
                     Confirmation Email
-🎯 Project Outcomes
+```
+
+---
+
+# 🎯 Project Outcomes
+
 The project demonstrates practical implementation of:
+
 * Case management using Pega
 * Low-code application development
 * Workflow automation
@@ -451,11 +537,22 @@ The project demonstrates practical implementation of:
 * Work queue management
 * Automated email notifications
 * End-to-end case lifecycle management
-👨‍💻 Author
-*Adduri Aswani*
-🎓 Built as part of the *Pega Next-In-Practice (NIP) Project*
-*August 2026*
-⭐ Project Highlights
+
+---
+
+# 👨‍💻 Author
+
+### **Adduri Aswani**
+
+🎓 Built as part of the **Pega Next-In-Practice (NIP) Project**
+
+📅 **August 2026**
+
+---
+
+## ⭐ Project Highlights
+
+```text
 🎬 Movie & Show Management
 🎟️ Automated Ticket Booking
 💺 Seat Availability & Allocation
@@ -466,5 +563,6 @@ The project demonstrates practical implementation of:
 📧 Automated Email Confirmation
 🗃️ Reusable Pega Data Objects
 ⚙️ Business Rules & Data Transforms
+```
 
-*Built with Pega Platform to demonstrate real-world workflow automation and case management.*
+> **Built with Pega Platform to demonstrate real-world workflow automation and case management.**
